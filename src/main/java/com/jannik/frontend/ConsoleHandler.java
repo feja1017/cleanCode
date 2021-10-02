@@ -1,6 +1,6 @@
 package com.jannik.frontend;
 
-import com.jannik.csvReader.CsvHelper;
+import com.jannik.csv_reader.CsvHelper;
 import com.jannik.tablulate.PaginationHelper;
 import com.jannik.tablulate.TabulateService;
 
@@ -10,9 +10,11 @@ import java.util.Scanner;
 
 public class ConsoleHandler {
 
-    TabulateService tabulateService;
-    PaginationHelper paginationHelper;
-    Scanner sc = new Scanner(System.in);
+    private TabulateService tabulateService;
+
+    private PaginationHelper paginationHelper;
+
+    private Scanner sc = new Scanner(System.in);
 
     public ConsoleHandler(Integer size, String fileName) throws IOException {
         tabulateService = new TabulateService();
@@ -28,26 +30,27 @@ public class ConsoleHandler {
     public void interact() {
         char c = 'F';
         do {
-                switch (c) {
-                    case 'F':
-                        displayData(paginationHelper.getFirstPage());
-                        break;
-                    case 'P':
-                        displayData(paginationHelper.getPreviousPage());
-                        break;
-                    case 'N':
-                        displayData(paginationHelper.getNextPage());
-                        break;
-                    case 'L':
-                        displayData(paginationHelper.getLastPage());
-                        break;
-                    default:
-                        System.out.println("Invalid Input");
-                        break;
-                }
-                System.out.println("Page " + paginationHelper.getCurrentPage() + " of " + paginationHelper.getMaxPage());
-                System.out.println("F)irst page, P)revious page, N)ext page, L)ast page, E)xit");
-                c = sc.next().charAt(0);
+            switch (c) {
+                case 'F':
+                    displayData(paginationHelper.getFirstPage());
+                    break;
+                case 'P':
+                    displayData(paginationHelper.getPreviousPage());
+                    break;
+                case 'N':
+                    displayData(paginationHelper.getNextPage());
+                    break;
+                case 'L':
+                    displayData(paginationHelper.getLastPage());
+                    break;
+                default:
+                    System.out.println("Invalid Input");
+                    break;
+            }
+            System.out.println("Page " + paginationHelper.getCurrentPage() + " of " + paginationHelper.getMaxPage());
+            System.out.println("F)irst page, P)revious page, N)ext page, L)ast page, E)xit");
+            c = sc.next().charAt(0);
+            c = Character.toUpperCase(c);
         } while (c != 'E');
     }
 }

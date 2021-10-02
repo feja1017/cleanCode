@@ -4,10 +4,10 @@ import java.util.List;
 
 public class PaginationHelper {
 
-    TabulateService tabulateService;
-    Integer size;
-    Integer currentPage = -1;
-    Integer maxPage;
+    private TabulateService tabulateService;
+    private Integer size;
+    private Integer currentPage = -1;
+    private Integer maxPage;
 
     public PaginationHelper(TabulateService tabulateService, Integer size) {
         this.tabulateService = tabulateService;
@@ -24,7 +24,7 @@ public class PaginationHelper {
     }
 
     public List<String> getPreviousPage() {
-        if (this.currentPage - 1 >= 1) {
+        if (this.currentPage - 1 > 1) {
             this.currentPage = this.currentPage - 1;
             return getPage();
         }
@@ -42,7 +42,11 @@ public class PaginationHelper {
     private List<String> getPage() {
         List<String> result = this.tabulateService.getTabulatedHeader();
         List<List<String>> dataset = tabulateService.getDataSet();
-        List<List<String>> sublist = dataset.subList(size * (currentPage - 1), size * currentPage);
+
+        final var subListFrom = size * (currentPage - 1) + 1;
+        final var subListTo = size * currentPage + 1;
+        List<List<String>> sublist = dataset.subList(subListFrom, subListTo);
+
         result.addAll(tabulateService.getTabulatedPage(sublist));
         return result;
     }
@@ -50,7 +54,11 @@ public class PaginationHelper {
     public List<String> getLastPage() {
         List<String> result = this.tabulateService.getTabulatedHeader();
         List<List<String>> dataset = tabulateService.getDataSet();
-        List<List<String>> sublist = dataset.subList(dataset.size() - (dataset.size() % size), dataset.size());
+
+        final var subListFrom = dataset.size() - (dataset.size() % size) - 1;
+        final var subListTo = dataset.size();
+        List<List<String>> sublist = dataset.subList(subListFrom, subListTo);
+
         result.addAll(tabulateService.getTabulatedPage(sublist));
         this.currentPage = maxPage;
         return result;

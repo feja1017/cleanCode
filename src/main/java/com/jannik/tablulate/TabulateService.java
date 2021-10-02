@@ -27,7 +27,7 @@ public class TabulateService {
         });
     }
 
-    private void calculateColumnLength(List<String> newColumn) {
+    protected void calculateColumnLength(List<String> newColumn) {
         newColumn.forEach(entry -> {
             int index = newColumn.indexOf(entry);
             if (columns.size() != newColumn.size()) {
@@ -40,7 +40,7 @@ public class TabulateService {
         });
     }
 
-    private String getDividerRow() {
+    protected String getDividerRow() {
         String divider = "";
         for (int i = 0; i < columns.size(); i++) {
             divider += "-".repeat(columns.get(i)) + "+";
@@ -48,7 +48,7 @@ public class TabulateService {
         return divider;
     }
 
-    private String getDataRow(List<String> data) {
+    protected String getDataRow(List<String> data) {
         String dataRow = "";
         for (int i = 0; i < data.size(); i++) {
             dataRow += data.get(i) + " ".repeat(columns.get(i) - data.get(i).length()) + "|";
@@ -73,9 +73,5 @@ public class TabulateService {
 
     public List<List<String>> getDataSet() {
         return dataSet;
-    }
-
-    public List<Integer> getColumns() {
-        return columns;
     }
 }
